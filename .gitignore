@@ -1,0 +1,11 @@
+/SlitApplication/build/
+/SlitApplication/dist/
+/SlitApplication/nbproject/private/
+/SlitInterface/build/
+/SlitInterface/dist/
+/SlitInterface/nbproject/private/
+/SlitServer/SlitServer-ejb/build/
+/SlitServer/SlitServer-ejb/dist/
+/SlitServer/SlitServer-ejb/nbproject/private/
+/SlitServer/build/
+/SlitServer/nbproject/private/
