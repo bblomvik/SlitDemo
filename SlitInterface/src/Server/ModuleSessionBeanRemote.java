@@ -22,4 +22,14 @@ public interface ModuleSessionBeanRemote {
     
     List<String> getModulesNames();
     
+    String getModuleNameFromId(int id); 
+    
+    ModuleDataModule getModule(int id) ;
+    
+    List<ModuleDataModule> getAllModules(); 
+    
+    boolean storeModule(ModuleDataModule module); 
+    
+     ModuleDataModule findModuleByName(String moduleName); 
+    
 }

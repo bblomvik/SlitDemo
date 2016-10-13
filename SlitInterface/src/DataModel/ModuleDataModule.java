@@ -11,7 +11,7 @@ package DataModel;
  */
 public class ModuleDataModule implements java.io.Serializable{
     
-     private int id;
+    private int id;
     
     private String moduleName; 
     
@@ -19,6 +19,20 @@ public class ModuleDataModule implements java.io.Serializable{
     
     private String moduleDescription;
 
+    public ModuleDataModule(String moduleName, String moduleSummary, String moduleDescription)
+    {
+        this.moduleName = moduleName; 
+        
+        this.moduleSummary = moduleSummary; 
+        
+        this.moduleDescription = moduleDescription; 
+    }
+    
+    public ModuleDataModule() 
+    {
+        
+    }
+    
     public int getId() {
         return id;
     }

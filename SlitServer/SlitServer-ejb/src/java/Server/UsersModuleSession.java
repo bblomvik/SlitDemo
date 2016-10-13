@@ -21,6 +21,11 @@ public class UsersModuleSession implements UsersModuleSessionRemote {
     @PersistenceContext(unitName = "SlitServer-ejbPU")
     private EntityManager em;
 
+    /**
+     * Get user from id. 
+     * @param id
+     * @return UsersDataModel
+     */
     @Override
     public UsersDataModel getUserFromId(int id) {
         Users user = em.find(Users.class, id);
@@ -28,6 +33,11 @@ public class UsersModuleSession implements UsersModuleSessionRemote {
         return convertUser(user); 
     }
     
+    /**
+     * Convert a users entity to a UsersDataModule  
+     * @param user
+     * @return UsersDataModel
+     */
     private UsersDataModel convertUser(Users user)
     {
         UsersDataModel userDataModule = new UsersDataModel(); 

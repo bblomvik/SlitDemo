@@ -24,30 +24,36 @@ public class ModuleSessionBean implements ModuleSessionBeanRemote {
     @PersistenceContext(unitName = "SlitServer-ejbPU")
     private EntityManager em;
 
+    /**
+     * Get a module name by id.
+     * @param id
+     * @return 
+     */
     @Override
     public String getModuleById(int id) {
         return "test"; 
     }
 
+    /**
+     * Get all the modules in the database. 
+     * @return List<ModuleDataModule> 
+     */
     @Override
     public List<ModuleDataModule> getModules()
     {
         
         List<ModuleDataModule> dataModules = new ArrayList<ModuleDataModule>(); 
 
-        
         try 
         {
-            Query query = em.createNamedQuery("Module.findAll", Module.class);
+            Query query = em.createNamedQuery("Module.findAll", Module.class); 
             
             List<Module> modules = query.getResultList();
-            
             
             for(Module module : modules) 
             {
                 dataModules.add(this.convertModule(module)); 
             }
-           
         }
         catch(Exception e) 
         {
@@ -56,6 +62,10 @@ public class ModuleSessionBean implements ModuleSessionBeanRemote {
         return dataModules;
     }
     
+    /**
+     * Get all the modules with only the names. 
+     * @return List<String> 
+     */
     @Override
     public List<String> getModulesNames()
     {
@@ -82,6 +92,11 @@ public class ModuleSessionBean implements ModuleSessionBeanRemote {
         return dataModules; 
     }
     
+    /**
+     * Convert Entity module to a ModuleDataModule 
+     * @param module
+     * @return ModuleDataModule 
+     */
     public ModuleDataModule convertModule(Module module) 
     {
         ModuleDataModule moduleDataModule = new ModuleDataModule(); 
@@ -93,6 +108,129 @@ public class ModuleSessionBean implements ModuleSessionBeanRemote {
         
         return moduleDataModule; 
     }
+   
+    /**
+     * Convert a ModuleDataModule to an entity.
+     * @param module
+     * @return Module
+     */
+    private Module convertToModuleEntity(ModuleDataModule module) 
+    {
+        Module moduleEntity = new Module(); 
+        
+        moduleEntity.setId(module.getId());
+        moduleEntity.setModuleDescription(module.getModuleDescription());
+        moduleEntity.setModuleName(module.getModuleName());
+        moduleEntity.setModuleSummary(module.getModuleSummary());
+        
+        return moduleEntity; 
+    }
+    
+    /**
+     * Get module name from id. 
+     * @param id
+     * @return String
+     */
+    @Override
+    public String getModuleNameFromId(int id) 
+    {
+        Module module = em.find(Module.class, id);
+        
+        return module.getModuleName(); 
+    }
+    
+    /**
+     * Get module from id. 
+     * @param id
+     * @return ModuleDataModule
+     */
+    @Override 
+    public ModuleDataModule getModule(int id) 
+    {
+        Module module = em.find(Module.class, id);
+        
+        return this.convertModule(module); 
+    }
+    
+    /**
+     * Get all modules in the database. 
+     * @return List<ModuleDataModule>
+     */
+    @Override
+    public List<ModuleDataModule> getAllModules() 
+    {
+        
+        List<ModuleDataModule> moduleList = new ArrayList<ModuleDataModule>();
+        
+        try 
+        {
+            Query query = em.createNamedQuery("Module.findAll", Module.class); 
+            
+            List<Module> modules = query.getResultList();
+            
+            for(Module module : modules) 
+            {
+                moduleList.add(this.convertModule(module)); 
+            }
+        }
+        catch(Exception e) 
+        {
+            e.printStackTrace();
+        }
+        
+        return moduleList; 
+    }
+
+    /**
+     * Find
+     * @param moduleName
+     * @return ModuleDataModule
+     */
+    @Override 
+    public ModuleDataModule findModuleByName(String moduleName)
+    {
+        ModuleDataModule retModule = new ModuleDataModule(); 
+        
+        try 
+        {
+            Query query = em.createNamedQuery("Module.findByModuleName", Module.class);
+            
+            query.setParameter("moduleName", moduleName);
+            
+            Module module = (Module)query.getSingleResult();
+            
+            retModule = this.convertModule(module);
+        }
+        catch(Exception e) 
+        {
+            e.printStackTrace();
+        }
+        return retModule; 
+    }
+    
+    /**
+     * Store a module to the database. 
+     * @param module
+     * @return boolean 
+     */
+    @Override
+    public boolean storeModule(ModuleDataModule module)
+    {
+        Module moduleEntity = this.convertToModuleEntity(module);
+        
+        try 
+        {
+            em.persist(moduleEntity);
+        }
+        catch(Exception e) 
+        {
+            e.printStackTrace();
+            return false; 
+        }
+        
+        return true; 
+    }
+
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

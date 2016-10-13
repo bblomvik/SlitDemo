@@ -46,4 +46,29 @@ public class ModuleManager {
         return this.lookupModuleSessionBeanRemote().getModulesNames(); 
     }
     
+    public String getModuleName() 
+    {
+        return this.lookupModuleSessionBeanRemote().getModuleName();
+    }
+    
+    public String getModuleNameFromId(int id) 
+    {
+        return this.lookupModuleSessionBeanRemote().getModuleNameFromId(id);
+    }
+    
+    public ModuleDataModule getModule(int id) 
+    {
+        return this.lookupModuleSessionBeanRemote().getModule(id);
+    }
+    
+    public ModuleDataModule getModuleByName(String moduleName)
+    {
+        return this.lookupModuleSessionBeanRemote().findModuleByName(moduleName); 
+    }
+    
+    public boolean storeModule(ModuleDataModule dataModule) 
+    {
+        return this.lookupModuleSessionBeanRemote().storeModule(dataModule); 
+    }
+    
 }
